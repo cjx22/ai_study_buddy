@@ -1,22 +1,17 @@
 import React from "react";
-import QuizCard from "./components/QuizCard";
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Landing from "./components/Landing";
+import Feed from "./components/Feed";
 
 function App() {
   return (
-    <div className="App">
-      <h1>AI Study Buddy</h1>
-      <QuizCard
-        question="What is 2 + 2?"
-        options={["3", "4", "5", "22"]}
-        correctAnswer="4"
-      />
-      <QuizCard
-        question="Which planet is known as the Red Planet?"
-        options={["Earth", "Mars", "Jupiter"]}
-        correctAnswer="Mars"
-      />
-    </div>
+    <Routes>
+      {/* Landing page (hero input) */}
+      <Route path="/" element={<Landing />} />
+
+      {/* Feed page (interactive quizzes) */}
+      <Route path="/feed" element={<Feed />} />
+    </Routes>
   );
 }
 
