@@ -1,0 +1,40 @@
+.animated-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.animated-list.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.animated-list.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.animated-list-item {
+  background: #f5f9ff;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #1a3d7c;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.animated-list-item:focus {
+  border: 2px solid #3578e5;
+  background: #edf4ff;
+}
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to top, #fff, transparent);
+  pointer-events: none;
+}

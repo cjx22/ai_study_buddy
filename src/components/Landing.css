@@ -62,9 +62,9 @@ textarea::placeholder {
   color: #999;
 }
 
-.upload-btn {
+upload-btn {
   display: inline-block;
-  padding: 1rem 1.8rem;
+  padding: 1rem 1.5rem;
   background: #4da3ff;
   color: white;
   border-radius: 10px;
@@ -72,10 +72,14 @@ textarea::placeholder {
   font-weight: bold;
   transition: background 0.3s ease;
   border: none;
-  font-size: 1.1rem;
+  text-align: center;
 }
 
 .upload-btn:hover {
   background: #2f82e6;
+}
+
+.upload-btn input {
+  display: none; /* hide actual file input */
 }
 
