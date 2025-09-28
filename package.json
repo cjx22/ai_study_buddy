@@ -15,6 +15,7 @@
     "pdfjs-dist": "^5.4.149",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-quizlet-flashcard": "^4.0.22",
     "react-router-dom": "^7.9.3",
     "tesseract.js": "^6.0.1"
   },

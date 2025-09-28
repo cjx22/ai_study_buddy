@@ -12,15 +12,15 @@ export async function generateSummary(text: string) {
       messages: [
         {
           role: "system",
-          content: "You are a helpful assistant. Summarize text clearly and concisely.",
+          content: "You are a helpful assistant. Summarize text in 1-2 concise sentences, focusing on the main idea and most important details.",
         },
         {
           role: "user",
-          content: `Summarize the following text in 3–5 sentences:\n\n${text}`,
+          content: `Summarize the following text in 1-2 concise sentences, focusing on the main idea and most important details:\n\n${text}`,
         },
       ],
       temperature: 0.5,
-      max_tokens: 500,
+      max_tokens: 180,
     });
 
     return response.choices[0]?.message?.content || "No summary generated.";

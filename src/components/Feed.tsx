@@ -5,6 +5,9 @@ import AnimatedList from "./AnimatedList";
 import Modal from "./Modal";
 import { generateQuiz } from "../services/quizService";
 import { generateSummary } from "../services/summaryService";
+import { generateFlashcards } from "../services/flashcardService";
+import { FlashcardArray } from "react-quizlet-flashcard";
+import "react-quizlet-flashcard/dist/index.css";
 import "./Feed.css";
 
 function Feed() {
@@ -17,12 +20,31 @@ function Feed() {
   const [summary, setSummary] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [activeChunkIdx, setActiveChunkIdx] = useState<number | null>(null);
-  const [mode, setMode] = useState<"quiz" | "summary" | null>(null);
+  const [mode, setMode] = useState<"quiz" | "summary" | "flashcard" | null>(null);
+  const [flashcards, setFlashcards] = useState<any[]>([]);
 
   useEffect(() => {
     setChunks(chunkText(content, 300));
     setQuizzes([]);
   }, [content]);
+
+  const handleFlashcards = async (chunk: string, idx: number) => {
+    setMode("flashcard");
+    setActiveChunkIdx(idx);
+    setFlashcards([]);
+    setModalOpen(true);
+
+    const cards = await generateFlashcards(chunk);
+
+    // Convert to the shape react-quizlet-flashcard expects
+    const formatted = cards.map((c: any, i: number) => ({
+      id: i,
+      front: { html: <div>{c.front}</div> },
+      back: { html: <div>{c.back}</div> },
+    }));
+
+    setFlashcards(formatted);
+  };
 
   const handleLoadQuiz = async (chunk: string, idx: number) => {
     setMode("quiz");
@@ -65,10 +87,10 @@ function Feed() {
           items={["Summarize", "Generate Quiz", "Flashcards"]}
           onItemSelect={(item: string) => {
             if (!chunks.length) return;
-            const idx = activeChunkIdx ?? 0; // default to first chunk
+            const idx = activeChunkIdx ?? 0;
             if (item === "Summarize") handleSummarize(chunks[idx], idx);
             if (item === "Generate Quiz") handleLoadQuiz(chunks[idx], idx);
-            if (item === "Flashcards") console.log("⚡ TODO: Flashcards");
+            if (item === "Flashcards") handleFlashcards(chunks[idx], idx);
           }}
         />
       </aside>
@@ -109,6 +131,13 @@ function Feed() {
           <div>
             <h2>Summary</h2>
             <p>{summary}</p>
+          </div>
+        )}
+        {mode === "flashcard" && (
+          <div>
+            <h2>Flashcards</h2>
+            {!flashcards.length && <p>⏳ Generating flashcards...</p>}
+            {flashcards.length > 0 && <FlashcardArray deck={flashcards} />}
           </div>
         )}
       </Modal>
